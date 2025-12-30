@@ -14,6 +14,7 @@ import { MultiEditViewFull } from './MultiEditViewFull';
 import { CodexBashView } from './CodexBashView';
 import { CodexPatchView } from './CodexPatchView';
 import { CodexDiffView } from './CodexDiffView';
+import { AskUserQuestionView } from './AskUserQuestionView';
 
 export type ToolViewProps = {
     tool: ToolCall;
@@ -21,8 +22,16 @@ export type ToolViewProps = {
     messages: Message[]
 }
 
+// Extended props type that includes sessionId for tools that need it (e.g., AskUserQuestion)
+export type ToolViewPropsWithSession = ToolViewProps & {
+    sessionId?: string;
+}
+
 // Type for tool view components
 export type ToolViewComponent = React.ComponentType<ToolViewProps>;
+
+// Type for tool view components that require sessionId
+export type ToolViewComponentWithSession = React.ComponentType<ToolViewPropsWithSession>;
 
 // Registry of tool-specific view components
 export const toolViewRegistry: Record<string, ToolViewComponent> = {
@@ -36,8 +45,12 @@ export const toolViewRegistry: Record<string, ToolViewComponent> = {
     ExitPlanMode: ExitPlanToolView,
     exit_plan_mode: ExitPlanToolView,
     MultiEdit: MultiEditView,
-    Task: TaskView
+    Task: TaskView,
+    AskUserQuestion: AskUserQuestionView as ToolViewComponent,
 };
+
+// Tools that need sessionId passed to them
+export const sessionAwareTools = new Set(['AskUserQuestion']);
 
 export const toolFullViewRegistry: Record<string, ToolViewComponent> = {
     Bash: BashViewFull,
@@ -67,3 +80,4 @@ export { MultiEditViewFull } from './MultiEditViewFull';
 export { ExitPlanToolView } from './ExitPlanToolView';
 export { MultiEditView } from './MultiEditView';
 export { TaskView } from './TaskView';
+export { AskUserQuestionView } from './AskUserQuestionView';

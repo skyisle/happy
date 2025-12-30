@@ -57,6 +57,8 @@ export const en = {
         fileViewer: 'File Viewer',
         loading: 'Loading...',
         retry: 'Retry',
+        skip: 'Skip',
+        confirm: 'Confirm',
     },
 
     profile: {
@@ -481,6 +483,7 @@ export const en = {
             reasoning: 'Reasoning',
             applyChanges: 'Update file',
             viewDiff: 'Current file changes',
+            askQuestion: 'Question',
         },
         desc: {
             terminalCmd: ({ cmd }: { cmd: string }) => `Terminal(cmd: ${cmd})`,
@@ -498,6 +501,7 @@ export const en = {
             modifyingFiles: ({ count }: { count: number }) => `Modifying ${count} files`,
             modifyingMultipleFiles: ({ file, count }: { file: string; count: number }) => `${file} and ${count} more`,
             showingDiff: 'Showing changes',
+            askQuestionCount: ({ count }: { count: number }) => count === 1 ? '1 question' : `${count} questions`,
         }
     },
 
@@ -854,7 +858,19 @@ export const en = {
         friendRequestGeneric: 'New friend request',
         friendAccepted: ({ name }: { name: string }) => `You are now friends with ${name}`,
         friendAcceptedGeneric: 'Friend request accepted',
-    }
+    },
+
+    askQuestion: {
+        // AskUserQuestion tool strings
+        submit: 'Submit',
+        answered: 'Answered',
+    },
+
+    notifications: {
+        // Push notification strings
+        questionTitle: 'Question from Claude',
+        questionBody: 'Claude is asking for your input',
+    },
 } as const;
 
 export type Translations = typeof en;

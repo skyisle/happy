@@ -16,6 +16,7 @@ const ICON_WEB = (size: number = 24, color: string = '#000') => <Ionicons name="
 const ICON_EXIT = (size: number = 24, color: string = '#000') => <Ionicons name="exit-outline" size={size} color={color} />;
 const ICON_TODO = (size: number = 24, color: string = '#000') => <Ionicons name="bulb-outline" size={size} color={color} />;
 const ICON_REASONING = (size: number = 24, color: string = '#000') => <Octicons name="light-bulb" size={size} color={color} />;
+const ICON_QUESTION = (size: number = 24, color: string = '#000') => <Ionicons name="help-circle-outline" size={size} color={color} />;
 
 export const knownTools = {
     'Task': {
@@ -592,6 +593,31 @@ export const knownTools = {
         extractDescription: (opts: { metadata: Metadata | null, tool: ToolCall }) => {
             return t('tools.desc.showingDiff');
         }
+    },
+    'AskUserQuestion': {
+        title: t('tools.names.askQuestion'),
+        icon: ICON_QUESTION,
+        minimal: false,  // Always show the question UI
+        noStatus: true,  // No status indicator needed
+        autoApprove: true,  // This tool should be auto-approved without showing PermissionFooter
+        input: z.object({
+            questions: z.array(z.object({
+                question: z.string().describe('The question to ask the user'),
+                header: z.string().max(12).optional().describe('Short header for the question'),
+                options: z.array(z.object({
+                    label: z.string().describe('Option label'),
+                    description: z.string().optional().describe('Optional description')
+                })).min(2).max(4).describe('Available options'),
+                multiSelect: z.boolean().optional().default(false).describe('Allow multiple selections')
+            })).min(1).max(3).describe('Questions to ask')
+        }).partial().loose(),
+        extractSubtitle: (opts: { metadata: Metadata | null, tool: ToolCall }) => {
+            if (opts.tool.input?.questions && Array.isArray(opts.tool.input.questions)) {
+                const count = opts.tool.input.questions.length;
+                return t('tools.desc.askQuestionCount', { count });
+            }
+            return null;
+        }
     }
 } satisfies Record<string, {
     title?: string | ((opts: { metadata: Metadata | null, tool: ToolCall }) => string);
@@ -599,6 +625,7 @@ export const knownTools = {
     noStatus?: boolean;
     hideDefaultError?: boolean;
     isMutable?: boolean;
+    autoApprove?: boolean;
     input?: z.ZodObject<any>;
     result?: z.ZodObject<any>;
     minimal?: boolean | ((opts: { metadata: Metadata | null, tool: ToolCall, messages?: Message[] }) => boolean);

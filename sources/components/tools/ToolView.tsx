@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, View, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 import { Ionicons, Octicons } from '@expo/vector-icons';
-import { getToolViewComponent } from './views/_all';
+import { getToolViewComponent, sessionAwareTools } from './views/_all';
 import { Message, ToolCall } from '@/sync/typesMessage';
 import { CodeView } from '../CodeView';
 import { ToolSectionView } from './ToolSectionView';
@@ -201,9 +201,14 @@ export const ToolView = React.memo<ToolViewProps>((props) => {
                 // Try to use a specific tool view component first
                 const SpecificToolView = getToolViewComponent(tool.name);
                 if (SpecificToolView) {
+                    // Check if this tool needs sessionId passed to it
+                    const viewProps = sessionAwareTools.has(tool.name)
+                        ? { tool, metadata: props.metadata, messages: props.messages ?? [], sessionId }
+                        : { tool, metadata: props.metadata, messages: props.messages ?? [] };
+
                     return (
                         <View style={styles.content}>
-                            <SpecificToolView tool={tool} metadata={props.metadata} messages={props.messages ?? []} />
+                            <SpecificToolView {...viewProps} />
                             {tool.state === 'error' && tool.result &&
                                 !(tool.permission && (tool.permission.status === 'denied' || tool.permission.status === 'canceled')) &&
                                 !hideDefaultError && (
@@ -246,7 +251,8 @@ export const ToolView = React.memo<ToolViewProps>((props) => {
             })()}
 
             {/* Permission footer - always renders when permission exists to maintain consistent height */}
-            {tool.permission && sessionId && (
+            {/* Skip for auto-approved tools like AskUserQuestion which handle their own interaction */}
+            {tool.permission && sessionId && !(knownTool && knownTool.autoApprove) && (
                 <PermissionFooter permission={tool.permission} sessionId={sessionId} toolName={tool.name} toolInput={tool.input} metadata={props.metadata} />
             )}
         </View>

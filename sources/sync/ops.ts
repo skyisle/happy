@@ -126,6 +126,20 @@ interface SessionKillResponse {
     message: string;
 }
 
+// Answer question operation types
+interface SessionAnswerQuestionRequest {
+    toolUseId: string;
+    answers: Array<{
+        questionIndex: number;
+        selectedOptions: number[];
+    }>;
+}
+
+interface SessionAnswerQuestionResponse {
+    success: boolean;
+    error?: string;
+}
+
 // Response types for spawn session
 export type SpawnSessionResult =
     | { type: 'success'; sessionId: string }
@@ -480,6 +494,30 @@ export async function sessionKill(sessionId: string): Promise<SessionKillRespons
 }
 
 /**
+ * Answer a question from the AskUserQuestion tool
+ */
+export async function sessionAnswerQuestion(
+    sessionId: string,
+    toolUseId: string,
+    answers: Array<{ questionIndex: number; selectedOptions: number[] }>
+): Promise<SessionAnswerQuestionResponse> {
+    try {
+        const request: SessionAnswerQuestionRequest = { toolUseId, answers };
+        const response = await apiSocket.sessionRPC<SessionAnswerQuestionResponse, SessionAnswerQuestionRequest>(
+            sessionId,
+            'answerQuestion',
+            request
+        );
+        return response;
+    } catch (error) {
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error'
+        };
+    }
+}
+
+/**
  * Permanently delete a session from the server
  * This will remove the session and all its associated data (messages, usage reports, access keys)
  * The session should be inactive/archived before deletion
@@ -519,5 +557,6 @@ export type {
     SessionGetDirectoryTreeResponse,
     TreeNode,
     SessionRipgrepResponse,
-    SessionKillResponse
+    SessionKillResponse,
+    SessionAnswerQuestionResponse
 };

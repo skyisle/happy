@@ -57,6 +57,8 @@ export const pt: TranslationStructure = {
         fileViewer: 'Visualizador de arquivos',
         loading: 'Carregando...',
         retry: 'Tentar novamente',
+        skip: 'Pular',
+        confirm: 'Confirmar',
     },
 
     profile: {
@@ -481,6 +483,7 @@ export const pt: TranslationStructure = {
             reasoning: 'Raciocínio',
             applyChanges: 'Atualizar arquivo',
             viewDiff: 'Alterações do arquivo atual',
+            askQuestion: 'Pergunta',
         },
         desc: {
             terminalCmd: ({ cmd }: { cmd: string }) => `Terminal(cmd: ${cmd})`,
@@ -498,6 +501,7 @@ export const pt: TranslationStructure = {
             modifyingFiles: ({ count }: { count: number }) => `Modificando ${count} arquivos`,
             modifyingMultipleFiles: ({ file, count }: { file: string; count: number }) => `${file} e ${count} mais`,
             showingDiff: 'Mostrando alterações',
+            askQuestionCount: ({ count }: { count: number }) => count === 1 ? '1 pergunta' : `${count} perguntas`,
         }
     },
 
@@ -853,7 +857,19 @@ export const pt: TranslationStructure = {
         friendRequestGeneric: 'Novo pedido de amizade',
         friendAccepted: ({ name }: { name: string }) => `Agora você é amigo de ${name}`,
         friendAcceptedGeneric: 'Pedido de amizade aceito',
-    }
+    },
+
+    askQuestion: {
+        // AskUserQuestion tool strings
+        submit: 'Enviar',
+        answered: 'Respondido',
+    },
+
+    notifications: {
+        // Push notification strings
+        questionTitle: 'Pergunta de Claude',
+        questionBody: 'Claude está aguardando sua resposta',
+    },
 } as const;
 
 export type TranslationsPt = typeof pt;

@@ -16,6 +16,7 @@ const ICON_WEB = (size: number = 24, color: string = '#000') => <Ionicons name="
 const ICON_EXIT = (size: number = 24, color: string = '#000') => <Ionicons name="exit-outline" size={size} color={color} />;
 const ICON_TODO = (size: number = 24, color: string = '#000') => <Ionicons name="bulb-outline" size={size} color={color} />;
 const ICON_REASONING = (size: number = 24, color: string = '#000') => <Octicons name="light-bulb" size={size} color={color} />;
+const ICON_QUESTION = (size: number = 24, color: string = '#000') => <Ionicons name="help-circle-outline" size={size} color={color} />;
 
 export const knownTools = {
     'Task': {
@@ -591,6 +592,41 @@ export const knownTools = {
         },
         extractDescription: (opts: { metadata: Metadata | null, tool: ToolCall }) => {
             return t('tools.desc.showingDiff');
+        }
+    },
+    'AskUserQuestion': {
+        title: t('tools.names.askQuestion'),
+        icon: ICON_QUESTION,
+        noStatus: true,
+        minimal: false,
+        input: z.object({
+            questions: z.array(z.object({
+                question: z.string().describe('The question to ask the user'),
+                header: z.string().max(12).describe('Short label (max 12 characters)'),
+                options: z.array(z.object({
+                    label: z.string().describe('Option text (1-5 words)'),
+                    description: z.string().optional().describe('Option description'),
+                })).min(2).max(4).describe('2-4 selection options'),
+                multiSelect: z.boolean().optional().default(false).describe('true for multi-select (checkbox), false for single-select (radio)'),
+            })).min(1).max(4).describe('1-4 questions')
+        }).partial().loose(),
+        extractSubtitle: (opts: { metadata: Metadata | null, tool: ToolCall }) => {
+            // Show the first question as subtitle
+            if (opts.tool.input?.questions && Array.isArray(opts.tool.input.questions) && opts.tool.input.questions.length > 0) {
+                const firstQuestion = opts.tool.input.questions[0];
+                if (firstQuestion?.question) {
+                    const q = firstQuestion.question;
+                    return q.length > 50 ? q.substring(0, 50) + '...' : q;
+                }
+            }
+            return null;
+        },
+        extractDescription: (opts: { metadata: Metadata | null, tool: ToolCall }) => {
+            if (opts.tool.input?.questions && Array.isArray(opts.tool.input.questions)) {
+                const count = opts.tool.input.questions.length;
+                return t('tools.desc.askQuestionCount', { count });
+            }
+            return t('tools.names.askQuestion');
         }
     }
 } satisfies Record<string, {

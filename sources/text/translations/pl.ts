@@ -43,6 +43,7 @@ export const pl: TranslationStructure = {
     common: {
         // Simple string constants
         cancel: 'Anuluj',
+        confirm: 'Potwierdź',
         authenticate: 'Uwierzytelnij',
         save: 'Zapisz',
         error: 'Błąd',
@@ -68,6 +69,7 @@ export const pl: TranslationStructure = {
         fileViewer: 'Przeglądarka plików',
         loading: 'Ładowanie...',
         retry: 'Ponów',
+        skip: 'Pomiń',
     },
 
     profile: {
@@ -491,6 +493,7 @@ export const pl: TranslationStructure = {
             reasoning: 'Rozumowanie',
             applyChanges: 'Zaktualizuj plik',
             viewDiff: 'Bieżące zmiany pliku',
+            askQuestion: 'Pytanie',
         },
         desc: {
             terminalCmd: ({ cmd }: { cmd: string }) => `Terminal(cmd: ${cmd})`,
@@ -508,6 +511,7 @@ export const pl: TranslationStructure = {
             modifyingFiles: ({ count }: { count: number }) => `Modyfikowanie ${count} ${plural({ count, one: 'pliku', few: 'plików', many: 'plików' })}`,
             modifyingMultipleFiles: ({ file, count }: { file: string; count: number }) => `${file} i ${count} ${plural({ count, one: 'więcej', few: 'więcej', many: 'więcej' })}`,
             showingDiff: 'Pokazywanie zmian',
+            askQuestionCount: ({ count }: { count: number }) => `${count} ${plural({ count, one: 'pytanie', few: 'pytania', many: 'pytań' })}`,
         }
     },
 
@@ -877,6 +881,18 @@ export const pl: TranslationStructure = {
         friendRequestGeneric: 'Nowe zaproszenie do znajomych',
         friendAccepted: ({ name }: { name: string }) => `Jesteś teraz znajomym z ${name}`,
         friendAcceptedGeneric: 'Zaproszenie do znajomych zaakceptowane',
+    },
+
+    askQuestion: {
+        // Used by AskUserQuestion tool
+        submit: 'Wyślij',
+        answered: 'Odpowiedziano',
+    },
+
+    notifications: {
+        // Push notification strings
+        questionTitle: 'Pytanie od Claude',
+        questionBody: 'Claude prosi o Twoją odpowiedź',
     }
 } as const;
 

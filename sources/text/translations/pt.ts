@@ -32,6 +32,7 @@ export const pt: TranslationStructure = {
     common: {
         // Simple string constants
         cancel: 'Cancelar',
+        confirm: 'Confirmar',
         authenticate: 'Autenticar',
         save: 'Salvar',
         error: 'Erro',
@@ -57,6 +58,7 @@ export const pt: TranslationStructure = {
         fileViewer: 'Visualizador de arquivos',
         loading: 'Carregando...',
         retry: 'Tentar novamente',
+        skip: 'Pular',
     },
 
     profile: {
@@ -481,6 +483,7 @@ export const pt: TranslationStructure = {
             reasoning: 'Raciocínio',
             applyChanges: 'Atualizar arquivo',
             viewDiff: 'Alterações do arquivo atual',
+            askQuestion: 'Pergunta',
         },
         desc: {
             terminalCmd: ({ cmd }: { cmd: string }) => `Terminal(cmd: ${cmd})`,
@@ -498,6 +501,7 @@ export const pt: TranslationStructure = {
             modifyingFiles: ({ count }: { count: number }) => `Modificando ${count} arquivos`,
             modifyingMultipleFiles: ({ file, count }: { file: string; count: number }) => `${file} e ${count} mais`,
             showingDiff: 'Mostrando alterações',
+            askQuestionCount: ({ count }: { count: number }) => `${count} ${plural({ count, singular: 'pergunta', plural: 'perguntas' })}`,
         }
     },
 
@@ -853,6 +857,18 @@ export const pt: TranslationStructure = {
         friendRequestGeneric: 'Novo pedido de amizade',
         friendAccepted: ({ name }: { name: string }) => `Agora você é amigo de ${name}`,
         friendAcceptedGeneric: 'Pedido de amizade aceito',
+    },
+
+    askQuestion: {
+        // Used by AskUserQuestion tool
+        submit: 'Enviar',
+        answered: 'Respondido',
+    },
+
+    notifications: {
+        // Push notification strings
+        questionTitle: 'Pergunta do Claude',
+        questionBody: 'Claude solicita sua resposta',
     }
 } as const;
 

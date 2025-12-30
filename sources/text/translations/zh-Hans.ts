@@ -34,6 +34,7 @@ export const zhHans: TranslationStructure = {
     common: {
         // Simple string constants
         cancel: '取消',
+        confirm: '确认',
         authenticate: '认证',
         save: '保存',
         error: '错误',
@@ -59,6 +60,7 @@ export const zhHans: TranslationStructure = {
         fileViewer: '文件查看器',
         loading: '加载中...',
         retry: '重试',
+        skip: '跳过',
     },
 
     profile: {
@@ -483,6 +485,7 @@ export const zhHans: TranslationStructure = {
             reasoning: '推理',
             applyChanges: '更新文件',
             viewDiff: '当前文件更改',
+            askQuestion: '问题',
         },
         desc: {
             terminalCmd: ({ cmd }: { cmd: string }) => `终端(命令: ${cmd})`,
@@ -500,6 +503,7 @@ export const zhHans: TranslationStructure = {
             modifyingFiles: ({ count }: { count: number }) => `正在修改 ${count} 个文件`,
             modifyingMultipleFiles: ({ file, count }: { file: string; count: number }) => `${file} 和其他 ${count} 个`,
             showingDiff: '显示更改',
+            askQuestionCount: ({ count }: { count: number }) => `${count} 个问题`,
         }
     },
 
@@ -855,5 +859,17 @@ export const zhHans: TranslationStructure = {
         friendRequestGeneric: '新的好友请求',
         friendAccepted: ({ name }: { name: string }) => `您现在与 ${name} 成为了好友`,
         friendAcceptedGeneric: '好友请求已接受',
+    },
+
+    askQuestion: {
+        // Used by AskUserQuestion tool
+        submit: '提交',
+        answered: '已回答',
+    },
+
+    notifications: {
+        // Push notification strings
+        questionTitle: 'Claude 的提问',
+        questionBody: 'Claude 正在请求您的输入',
     }
 } as const;

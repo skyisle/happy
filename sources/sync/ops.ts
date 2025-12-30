@@ -313,6 +313,21 @@ export async function sessionDeny(sessionId: string, id: string, mode?: 'default
 }
 
 /**
+ * Answer an AskUserQuestion tool call
+ * This auto-approves the permission and sends the user's answers
+ */
+export async function sessionAnswerQuestion(sessionId: string, id: string, answers: Record<number, number | number[]>): Promise<void> {
+    // Approve the permission with the answers as the reason (serialized)
+    const request: SessionPermissionRequest = {
+        id,
+        approved: true,
+        reason: JSON.stringify(answers),
+        decision: 'approved'
+    };
+    await apiSocket.sessionRPC(sessionId, 'permission', request);
+}
+
+/**
  * Request mode change for a session
  */
 export async function sessionSwitch(sessionId: string, to: 'remote' | 'local'): Promise<boolean> {

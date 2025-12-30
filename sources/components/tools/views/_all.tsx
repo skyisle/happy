@@ -14,6 +14,7 @@ import { MultiEditViewFull } from './MultiEditViewFull';
 import { CodexBashView } from './CodexBashView';
 import { CodexPatchView } from './CodexPatchView';
 import { CodexDiffView } from './CodexDiffView';
+import { AskUserQuestionView } from './AskUserQuestionView';
 
 export type ToolViewProps = {
     tool: ToolCall;
@@ -36,7 +37,8 @@ export const toolViewRegistry: Record<string, ToolViewComponent> = {
     ExitPlanMode: ExitPlanToolView,
     exit_plan_mode: ExitPlanToolView,
     MultiEdit: MultiEditView,
-    Task: TaskView
+    Task: TaskView,
+    AskUserQuestion: AskUserQuestionView as ToolViewComponent,
 };
 
 export const toolFullViewRegistry: Record<string, ToolViewComponent> = {

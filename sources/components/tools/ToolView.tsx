@@ -201,9 +201,11 @@ export const ToolView = React.memo<ToolViewProps>((props) => {
                 // Try to use a specific tool view component first
                 const SpecificToolView = getToolViewComponent(tool.name);
                 if (SpecificToolView) {
+                    // AskUserQuestion needs sessionId for submitting answers
+                    const extraProps = tool.name === 'AskUserQuestion' ? { sessionId } : {};
                     return (
                         <View style={styles.content}>
-                            <SpecificToolView tool={tool} metadata={props.metadata} messages={props.messages ?? []} />
+                            <SpecificToolView tool={tool} metadata={props.metadata} messages={props.messages ?? []} {...extraProps} />
                             {tool.state === 'error' && tool.result &&
                                 !(tool.permission && (tool.permission.status === 'denied' || tool.permission.status === 'canceled')) &&
                                 !hideDefaultError && (
@@ -246,7 +248,8 @@ export const ToolView = React.memo<ToolViewProps>((props) => {
             })()}
 
             {/* Permission footer - always renders when permission exists to maintain consistent height */}
-            {tool.permission && sessionId && (
+            {/* AskUserQuestion handles its own permission flow through its view component */}
+            {tool.permission && sessionId && tool.name !== 'AskUserQuestion' && (
                 <PermissionFooter permission={tool.permission} sessionId={sessionId} toolName={tool.name} toolInput={tool.input} metadata={props.metadata} />
             )}
         </View>

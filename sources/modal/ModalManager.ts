@@ -1,6 +1,6 @@
 import { Platform, Alert } from 'react-native';
 import { t } from '@/text';
-import { AlertButton, ModalConfig, CustomModalConfig } from './types';
+import { AlertButton, ModalConfig, CustomModalConfig, AskUserQuestion, AskUserQuestionResult } from './types';
 
 class ModalManagerClass {
     private showModalFn: ((config: Omit<ModalConfig, 'id'>) => string) | null = null;
@@ -8,6 +8,7 @@ class ModalManagerClass {
     private hideAllModalsFn: (() => void) | null = null;
     private confirmResolvers: Map<string, (value: boolean) => void> = new Map();
     private promptResolvers: Map<string, (value: string | null) => void> = new Map();
+    private askQuestionResolvers: Map<string, (value: AskUserQuestionResult | null) => void> = new Map();
 
     setFunctions(
         showModal: (config: Omit<ModalConfig, 'id'>) => string,
@@ -141,6 +142,14 @@ class ModalManagerClass {
         }
     }
 
+    resolveAskQuestion(id: string, value: AskUserQuestionResult | null): void {
+        const resolver = this.askQuestionResolvers.get(id);
+        if (resolver) {
+            resolver(value);
+            this.askQuestionResolvers.delete(id);
+        }
+    }
+
     async prompt(
         title: string,
         message?: string,
@@ -197,6 +206,22 @@ class ModalManagerClass {
                 this.promptResolvers.set(modalId, resolve);
             });
         }
+    }
+
+    async askQuestion(questions: AskUserQuestion[]): Promise<AskUserQuestionResult | null> {
+        if (!this.showModalFn) {
+            console.error('ModalManager not initialized. Make sure ModalProvider is mounted.');
+            return null;
+        }
+
+        const modalId = this.showModalFn({
+            type: 'askQuestion',
+            questions
+        } as Omit<ModalConfig, 'id'>);
+
+        return new Promise<AskUserQuestionResult | null>((resolve) => {
+            this.askQuestionResolvers.set(modalId, resolve);
+        });
     }
 }
 

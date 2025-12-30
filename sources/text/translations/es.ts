@@ -32,6 +32,7 @@ export const es: TranslationStructure = {
     common: {
         // Simple string constants
         cancel: 'Cancelar',
+        confirm: 'Confirmar',
         authenticate: 'Autenticar',
         save: 'Guardar',
         error: 'Error',

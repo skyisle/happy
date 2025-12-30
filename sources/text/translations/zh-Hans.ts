@@ -34,6 +34,7 @@ export const zhHans: TranslationStructure = {
     common: {
         // Simple string constants
         cancel: '取消',
+        confirm: '确认',
         authenticate: '认证',
         save: '保存',
         error: '错误',

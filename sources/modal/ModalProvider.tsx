@@ -4,6 +4,7 @@ import { Modal } from './ModalManager';
 import { WebAlertModal } from './components/WebAlertModal';
 import { WebPromptModal } from './components/WebPromptModal';
 import { CustomModal } from './components/CustomModal';
+import { AskUserQuestionModal } from './components/AskUserQuestionModal';
 
 const ModalContext = createContext<ModalContextValue | undefined>(undefined);
 
@@ -94,6 +95,19 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
                         <CustomModal
                             config={currentModal}
                             onClose={() => hideModal(currentModal.id)}
+                        />
+                    )}
+                    {currentModal.type === 'askQuestion' && (
+                        <AskUserQuestionModal
+                            config={currentModal}
+                            onClose={() => {
+                                Modal.resolveAskQuestion(currentModal.id, null);
+                                hideModal(currentModal.id);
+                            }}
+                            onConfirm={(result) => {
+                                Modal.resolveAskQuestion(currentModal.id, result);
+                                hideModal(currentModal.id);
+                            }}
                         />
                     )}
                 </>

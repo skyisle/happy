@@ -32,6 +32,7 @@ export const en = {
     common: {
         // Simple string constants
         cancel: 'Cancel',
+        confirm: 'Confirm',
         authenticate: 'Authenticate',
         save: 'Save',
         error: 'Error',

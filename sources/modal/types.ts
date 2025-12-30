@@ -1,6 +1,6 @@
 import { ReactNode, ComponentType } from 'react';
 
-export type ModalType = 'alert' | 'confirm' | 'prompt' | 'custom';
+export type ModalType = 'alert' | 'confirm' | 'prompt' | 'custom' | 'askQuestion';
 
 export interface AlertButton {
     text: string;
@@ -46,7 +46,28 @@ export interface CustomModalConfig extends BaseModalConfig {
     props?: any;
 }
 
-export type ModalConfig = AlertModalConfig | ConfirmModalConfig | PromptModalConfig | CustomModalConfig;
+export interface AskUserQuestionOption {
+    label: string;
+    description?: string;
+}
+
+export interface AskUserQuestion {
+    question: string;
+    header: string;
+    options: AskUserQuestionOption[];
+    multiSelect?: boolean;
+}
+
+export interface AskUserQuestionModalConfig extends BaseModalConfig {
+    type: 'askQuestion';
+    questions: AskUserQuestion[];
+}
+
+export type AskUserQuestionResult = {
+    [questionIndex: number]: number | number[];
+};
+
+export type ModalConfig = AlertModalConfig | ConfirmModalConfig | PromptModalConfig | CustomModalConfig | AskUserQuestionModalConfig;
 
 export interface ModalState {
     modals: ModalConfig[];

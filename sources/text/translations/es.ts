@@ -58,6 +58,7 @@ export const es: TranslationStructure = {
         fileViewer: 'Visor de archivos',
         loading: 'Cargando...',
         retry: 'Reintentar',
+        skip: 'Omitir',
     },
 
     profile: {
@@ -482,6 +483,7 @@ export const es: TranslationStructure = {
             reasoning: 'Razonamiento',
             applyChanges: 'Actualizar archivo',
             viewDiff: 'Cambios del archivo actual',
+            askQuestion: 'Pregunta',
         },
         desc: {
             terminalCmd: ({ cmd }: { cmd: string }) => `Terminal(cmd: ${cmd})`,
@@ -499,6 +501,7 @@ export const es: TranslationStructure = {
             modifyingFiles: ({ count }: { count: number }) => `Modificando ${count} archivos`,
             modifyingMultipleFiles: ({ file, count }: { file: string; count: number }) => `${file} y ${count} más`,
             showingDiff: 'Mostrando cambios',
+            askQuestionCount: ({ count }: { count: number }) => `${count} ${plural({ count, singular: 'pregunta', plural: 'preguntas' })}`,
         }
     },
 
@@ -855,6 +858,18 @@ export const es: TranslationStructure = {
         friendRequestGeneric: 'Nueva solicitud de amistad',
         friendAccepted: ({ name }: { name: string }) => `Ahora eres amigo de ${name}`,
         friendAcceptedGeneric: 'Solicitud de amistad aceptada',
+    },
+
+    askQuestion: {
+        // Used by AskUserQuestion tool
+        submit: 'Enviar',
+        answered: 'Respondido',
+    },
+
+    notifications: {
+        // Push notification strings
+        questionTitle: 'Pregunta de Claude',
+        questionBody: 'Claude solicita tu respuesta',
     }
 } as const;
 

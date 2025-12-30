@@ -58,6 +58,7 @@ export const ca: TranslationStructure = {
         fileViewer: 'Visualitzador de fitxers',
         loading: 'Carregant...',
         retry: 'Torna-ho a provar',
+        skip: 'Omet',
     },
 
     profile: {
@@ -482,6 +483,7 @@ export const ca: TranslationStructure = {
             reasoning: 'Raonament',
             applyChanges: 'Actualitza fitxer',
             viewDiff: 'Canvis del fitxer actual',
+            askQuestion: 'Pregunta',
         },
         desc: {
             terminalCmd: ({ cmd }: { cmd: string }) => `Terminal(cmd: ${cmd})`,
@@ -499,6 +501,7 @@ export const ca: TranslationStructure = {
             modifyingFiles: ({ count }: { count: number }) => `Modificant ${count} fitxers`,
             modifyingMultipleFiles: ({ file, count }: { file: string; count: number }) => `${file} i ${count} més`,
             showingDiff: 'Mostrant canvis',
+            askQuestionCount: ({ count }: { count: number }) => `${count} ${plural({ count, singular: 'pregunta', plural: 'preguntes' })}`,
         }
     },
 
@@ -854,6 +857,18 @@ export const ca: TranslationStructure = {
         friendRequestGeneric: 'Nova sol·licitud d\'amistat',
         friendAccepted: ({ name }: { name: string }) => `Ara ets amic de ${name}`,
         friendAcceptedGeneric: 'Sol·licitud d\'amistat acceptada',
+    },
+
+    askQuestion: {
+        // Used by AskUserQuestion tool
+        submit: 'Enviar',
+        answered: 'Respost',
+    },
+
+    notifications: {
+        // Push notification strings
+        questionTitle: 'Pregunta de Claude',
+        questionBody: 'Claude sol·licita la teva resposta',
     }
 } as const;
 

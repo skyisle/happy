@@ -69,6 +69,7 @@ export const ru: TranslationStructure = {
         fileViewer: 'Просмотр файла',
         loading: 'Загрузка...',
         retry: 'Повторить',
+        skip: 'Пропустить',
     },
 
     connect: {
@@ -492,6 +493,7 @@ export const ru: TranslationStructure = {
             reasoning: 'Рассуждение',
             applyChanges: 'Обновить файл',
             viewDiff: 'Текущие изменения файла',
+            askQuestion: 'Вопрос',
         },
         desc: {
             terminalCmd: ({ cmd }: { cmd: string }) => `Терминал(команда: ${cmd})`,
@@ -509,6 +511,7 @@ export const ru: TranslationStructure = {
             modifyingFiles: ({ count }: { count: number }) => `Изменение ${count} ${plural({ count, one: 'файла', few: 'файлов', many: 'файлов' })}`,
             modifyingMultipleFiles: ({ file, count }: { file: string; count: number }) => `${file} и ещё ${count}`,
             showingDiff: 'Показ изменений',
+            askQuestionCount: ({ count }: { count: number }) => `${count} ${plural({ count, one: 'вопрос', few: 'вопроса', many: 'вопросов' })}`,
         }
     },
 
@@ -877,6 +880,18 @@ export const ru: TranslationStructure = {
         friendRequestGeneric: 'Новый запрос в друзья',
         friendAccepted: ({ name }: { name: string }) => `Вы теперь друзья с ${name}`,
         friendAcceptedGeneric: 'Запрос в друзья принят',
+    },
+
+    askQuestion: {
+        // Used by AskUserQuestion tool
+        submit: 'Отправить',
+        answered: 'Отвечено',
+    },
+
+    notifications: {
+        // Push notification strings
+        questionTitle: 'Вопрос от Claude',
+        questionBody: 'Claude запрашивает ваш ответ',
     }
 } as const;
 

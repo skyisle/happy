@@ -234,12 +234,6 @@ export default function DevScreen() {
                     onPress={() => router.push('/dev/modal-demo')}
                 />
                 <Item
-                    title="AskUserQuestion"
-                    subtitle="Question modal with single/multi select"
-                    icon={<Ionicons name="help-circle-outline" size={28} color="#007AFF" />}
-                    onPress={() => router.push('/dev/ask-question')}
-                />
-                <Item
                     title="Unit Tests"
                     subtitle="Run tests in the app environment"
                     icon={<Ionicons name="flask-outline" size={28} color="#34C759" />}
